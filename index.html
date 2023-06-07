@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Кнопка "Добавить" модального окна -->
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-toggle="modal"
+        data-bs-target="#addAppModal"
+        style="width: 100%"
+      >
+        Добавить
+      </button>
+      <!-- Таблица -->
+      <table
+        class="table table-striped table-hover table-bordered"
+        id="main-table"
+      >
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Alias</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <!-- Модальное окно нового приложения -->
+      <div
+        class="modal fade"
+        id="addAppModal"
+        tabindex="-1"
+        aria-labelledby="addAppModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="addAppModalLabel">
+                Добавить новое приложение
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Закрыть"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">ID</span>
+                <input
+                  id="add-id-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="ID приложения"
+                  aria-label="ID приложения"
+                  aria-describedby="basic-addon1"
+                />
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon2">Name</span>
+                <input
+                  id="add-name-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="Название приложения"
+                  aria-label="Название приложения"
+                  aria-describedby="basic-addon2"
+                />
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">Alias</span>
+                <input
+                  id="add-alias-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="Описание приложения"
+                  aria-label="Описание приложения"
+                  aria-describedby="basic-addon3"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Закрыть
+              </button>
+              <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Модальное окно редактирования приложения -->
+      <div
+        class="modal fade"
+        id="editAppModal"
+        tabindex="-1"
+        aria-labelledby="editAppModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="editAppModalLabel">
+                Редактировать приложение
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Закрыть"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon4">ID</span>
+                <input
+                  id="edit-id-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="ID приложения"
+                  aria-label="ID приложения"
+                  aria-describedby="basic-addon4"
+                  readonly
+                />
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon5">Name</span>
+                <input
+                  id="edit-name-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="Название приложения"
+                  aria-label="Название приложения"
+                  aria-describedby="basic-addon5"
+                />
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon6">Alias</span>
+                <input
+                  id="edit-alias-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="Описание приложения"
+                  aria-label="Описание приложения"
+                  aria-describedby="basic-addon6"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Закрыть
+              </button>
+              <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Chart -->
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <!-- Подключенные скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <!-- JS -->
+    <script>
+      //Chart
+      const ctx = document.getElementById("myChart");
+
+      const labeldata = (count) => {
+        const labeldata = [];
+
+        for (i = 0; i < count; i++) {
+          const random = Math.floor(Math.random() * (1000 - 600) + 600);
+          labeldata.push({
+            label: "Перехваченные запросы",
+            borderColor: "#008b6f",
+            borderWidth: 4,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, random],
+          });
+        }
+
+        return labeldata;
+      };
+
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: [
+            "18:30",
+            "19:00",
+            "19:30",
+            "20:00",
+            "20:30",
+            "21:00",
+            "21:30",
+            "22:00",
+            "22:30",
+            "23:00",
+          ],
+
+          datasets: labeldata(15),
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "Перехваченные запросы",
+            },
+          },
+        },
+      });
+
+      //Функция для рендера новых строк в таблице
+      const addApp = (id, name, alias) => {
+        const table = document.getElementById("main-table");
+        table.querySelector("tbody").innerHTML += `
+          <tr id="${id}">
+              <th class="id" scope="row">${id}</th>
+              <td class="name">${name}</td>
+              <td class="alias">${alias}</td>
+              <td>
+                  <button type="button" class="btn btn-dark edit-btn" data-bs-toggle="modal" data-bs-target="#editAppModal" id="edit-btn-${id}">
+                    <span class="bi bi-pencil"></span>
+                  </button>
+              </td>
+          </tr>
+        `;
+      };
+
+      //Функция для получения всех приложений с api
+      const getAllApp = async () => {
+        const res = await fetch(
+          "http://checkstatus.website:8099/Face/App_List",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "Content-Length": "2",
+            },
+            body: "1",
+          }
+        );
+
+        return await res.json();
+      };
+
+      //Фукнция для добавления нового приложения на api
+      const postNewApp = async () => {
+        const res = await fetch(
+          "http://checkstatus.website:8099/Face/New_app",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+              app_id: "987621341",
+              app_name: "test242",
+              policy_id: 10,
+              agent_js_config: "123",
+              correlations_config: "321321",
+            }),
+          }
+        );
+
+        return await res.json();
+      };
+
+      //Вызов функции по получению приложений, рендер на странице и навешивание обработчиков событий на созданные кнопки "Редактировать"
+      getAllApp().then((data) => {
+        const ids = data.app_table_ids;
+        const names = data.names;
+        const alias = data.ids;
+
+        for (i = 0; i < data.ids.length; i++) {
+          addApp(ids[i], names[i], alias[i]);
+        }
+
+        // Обработчик событий для отрендеренных кнопок
+        const table = document.querySelector("#main-table");
+        const buttons = table.querySelectorAll(".edit-btn");
+        buttons.forEach((button) =>
+          button.addEventListener("click", (e) => {
+            const id = e.currentTarget.id.substr(9);
+            const currentLine = table.querySelectorAll("tr")[id];
+            const modal = document.querySelector("#editAppModal");
+            modal.querySelector("#edit-id-input").value =
+              currentLine.querySelector(".id").textContent;
+            modal.querySelector("#edit-name-input").value =
+              currentLine.querySelector(".name").textContent;
+            modal.querySelector("#edit-alias-input").value =
+              currentLine.querySelector(".alias").textContent;
+          })
+        );
+
+        console.log(data);
+      });
+
+      //Вызов функции по добавлению нового приложения и вывод ответа api в консоль
+      postNewApp().then((data) => console.log(data));
+    </script>
+  </body>
+</html>
